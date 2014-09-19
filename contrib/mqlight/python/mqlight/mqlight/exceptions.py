@@ -1,3 +1,20 @@
+"""
+<copyright
+notice="lm-source-program"
+pids="5725-P60"
+years="2013,2014"
+crc="3568777996" >
+Licensed Materials - Property of IBM
+
+5725-P60
+
+(C) Copyright IBM Corp. 2013, 2014
+
+US Government Users Restricted Rights - Use, duplication or
+disclosure restricted by GSA ADP Schedule Contract with
+IBM Corp.
+</copyright>
+"""
 class MQLightError(Exception):
 
     """
@@ -36,6 +53,16 @@ class ReplacedError(MQLightError):
     specifying the exact same client id.
     """
     pass
+
+class LocalReplacedError(ReplacedError):
+    """
+    Special type of ReplacedError thrown by an invalidated Client instance. An
+    invaildated Client instance is one where the application has created another
+    Client instance with the same id, which replaces it.
+    """
+    def __init__(self):
+        self.msg = 'Client is Invalid. Application has created a ' + \
+            'second Client instance with the same id'
 
 
 class SecurityError(MQLightError):
