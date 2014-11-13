@@ -49,20 +49,21 @@
     $1.start = NULL;
     $1.size = 0;
   } else {
-    $1.start = PyString_AsString($input);
+    $1.start = PyBytes_AsString($input);
+
     if (!$1.start) {
       return NULL;
     }
-    $1.size = PyString_Size($input);
+    $1.size = PyBytes_Size($input);
   }
 }
 
 %typemap(out) pn_bytes_t {
-  $result = PyString_FromStringAndSize($1.start, $1.size);
+  $result = PyBytes_FromStringAndSize($1.start, $1.size);
 }
 
 %typemap(out) pn_delivery_tag_t {
-  $result = PyString_FromStringAndSize($1.bytes, $1.size);
+  $result = PyBytes_FromStringAndSize($1.bytes, $1.size);
 }
 
 %typemap(in) pn_uuid_t {
@@ -70,9 +71,9 @@
   if ($input == Py_None) {
     ; // Already zeroed out
   } else {
-    const char* b = PyString_AsString($input);
+    const char* b = PyBytes_AsString($input);
     if (b) {
-        memmove($1.bytes, b, (PyString_Size($input) < 16 ? PyString_Size($input) : 16));
+        memmove($1.bytes, b, (PyBytes_Size($input) < 16 ? PyBytes_Size($input) : 16));
     } else {
         return NULL;
     }
@@ -80,7 +81,7 @@
 }
 
 %typemap(out) pn_uuid_t {
-  $result = PyString_FromStringAndSize($1.bytes, 16);
+  $result = PyBytes_FromStringAndSize($1.bytes, 16);
 }
 
 %apply pn_uuid_t { pn_decimal128_t };

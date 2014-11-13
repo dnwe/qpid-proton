@@ -6,9 +6,9 @@
 # to you under the Apache License, Version 2.0 (the
 # "License"); you may not use this file except in compliance
 # with the License.  You may obtain a copy of the License at
-# 
+#
 #   http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing,
 # software distributed under the License is distributed on an
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -21,11 +21,14 @@
 Simple DOM for both SGML and XML documents.
 """
 
+
 from __future__ import division
 from __future__ import generators
 from __future__ import nested_scopes
-
-import transforms
+import sys
+VER = 2 if sys.version_info < (3, 0) else 3
+str_type = basestring if VER == 2 else str
+from . import transforms
 
 class Container:
 
@@ -177,7 +180,7 @@ class Leaf(Component, Dispatcher):
   base = None
 
   def __init__(self, data):
-    assert isinstance(data, basestring)
+    assert isinstance(data, str_type)
     self.data = data
 
 class Data(Leaf):
@@ -238,7 +241,10 @@ class Flatten(View):
     sources = [iter(self.source)]
     while sources:
       try:
-        nd = sources[-1].next()
+        if VER == 2:
+            nd = sources[-1].next()
+        else:
+            nd = next(sources[-1])
         if isinstance(nd, Tree):
           sources.append(iter(nd.children))
         else:
@@ -267,7 +273,7 @@ class Values(View):
       yield value
 
 def flatten_path(path):
-  if isinstance(path, basestring):
+  if isinstance(path, str_type):
     for part in path.split("/"):
       yield part
   elif callable(path):
@@ -290,7 +296,7 @@ class Query(View):
         select = Query
         pred = p
         source = query
-      elif isinstance(p, basestring):
+      elif isinstance(p, str_type):
         if p[0] == "@":
           select = Values
           pred = lambda x, n=p[1:]: x[0] == n

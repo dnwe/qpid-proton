@@ -6,9 +6,9 @@
 # to you under the Apache License, Version 2.0 (the
 # "License"); you may not use this file except in compliance
 # with the License.  You may obtain a copy of the License at
-# 
+#
 #   http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing,
 # software distributed under the License is distributed on an
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -21,9 +21,13 @@
 Parsers for SGML and XML to dom.
 """
 
-import sgmllib, xml.sax.handler
-from dom import *
+try:
+    from sgmllib import SGMLParser as NativeParser
+except ImportError:
+    from html.parser import HTMLParser as NativeParser
 
+import xml.sax.handler
+from .dom import *
 class Parser:
 
   def __init__(self):
@@ -73,10 +77,10 @@ class Parser:
       self.node = self.node.parent
 
 
-class SGMLParser(sgmllib.SGMLParser):
+class SGMLParser(NativeParser):
 
   def __init__(self, entitydefs = None):
-    sgmllib.SGMLParser.__init__(self)
+    NativeParser.__init__(self)
     if entitydefs == None:
       self.entitydefs = {}
     else:
@@ -102,7 +106,7 @@ class SGMLParser(sgmllib.SGMLParser):
     self.parser.end(name)
 
   def close(self):
-    sgmllib.SGMLParser.close(self)
+    NativeParser.close(self)
     self.parser.balance()
     assert self.parser.node == self.parser.tree
 
