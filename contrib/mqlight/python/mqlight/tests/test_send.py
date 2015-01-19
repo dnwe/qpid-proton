@@ -19,7 +19,7 @@ IBM Corp.
 """
 from mock import Mock
 import mqlight
-import mqlightexceptions as mqlexc
+import mqlight.mqlightexceptions as mqlexc
 
 class TestSend(unittest.TestCase):
     """
