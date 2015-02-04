@@ -17,11 +17,12 @@
 # under the License.
 #
 
-import os, common, sys, traceback
+import os, sys, traceback
+from . import common
 from proton import *
 from threading import Thread, Event
 from time import sleep, time
-from common import Skipped
+from .common import Skipped
 
 class Test(common.Test):
 
@@ -180,7 +181,7 @@ class MessengerTest(Test):
     try:
       self.client.put(msg)
       assert False, "Expecting MessengerException"
-    except MessengerException, exc:
+    except MessengerException as exc:
       err = str(exc)
       assert "unable to send to address: totally-bogus-address" in err, err
 

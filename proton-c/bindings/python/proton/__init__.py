@@ -31,7 +31,7 @@ The proton APIs consist of the following classes:
 """
 
 from cproton import *
-from wrapper import Wrapper
+from .wrapper import Wrapper
 
 import weakref, socket, sys, threading
 try:
@@ -3744,7 +3744,7 @@ class _cadapter:
 
   def exception(self, exc, val, tb):
     if self.on_error is None:
-      raise exc, val, tb
+      raise exc(val).with_traceback(tb)
     else:
       self.on_error((exc, val, tb))
 
@@ -3765,7 +3765,7 @@ class WrappedHandler(Wrapper):
   def _on_error(self, info):
     on_error = getattr(self, "on_error", None)
     if on_error is None:
-      raise info[0], info[1], info[2]
+      raise info[0](info[1]).with_traceback(info[2])
     else:
       on_error(info)
 

@@ -17,7 +17,7 @@
 # under the License.
 #
 
-from common import Test
+from .common import Test
 from proton.reactor import Reactor
 
 class Barf(Exception):

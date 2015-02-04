@@ -18,7 +18,7 @@
 #
 
 
-import common
+from . import common
 from proton import Url
 
 class UrlTest(common.Test):

@@ -18,7 +18,7 @@
 #
 import os
 import sys
-from common import Test, Skipped, free_tcp_ports, \
+from .common import Test, Skipped, free_tcp_ports, \
     MessengerReceiverC, MessengerSenderC, \
     MessengerReceiverValgrind, MessengerSenderValgrind, \
     MessengerReceiverPython, MessengerSenderPython, \

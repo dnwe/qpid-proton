@@ -224,7 +224,7 @@ class MessengerApp(object):
                     cmd.insert(0, foundfile)
                     cmd.insert(0, sys.executable)
             self._process = Popen(cmd, stdout=PIPE, stderr=STDOUT, bufsize=4096)
-        except OSError, e:
+        except OSError as e:
             print("ERROR: '%s'" % e)
             assert False, "Unable to execute command '%s', is it in your PATH?" % cmd[0]
         self._ready()  # wait for it to initialize

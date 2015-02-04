@@ -17,9 +17,10 @@
 # under the License.
 #
 
-import os, common
+import os
+from . import common
 from proton import *
-from common import pump
+from .common import pump
 
 class Test(common.Test):
   pass

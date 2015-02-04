@@ -18,7 +18,8 @@
 #
 
 from proton import *
-import os, common
+import os
+from . import common
 
 
 def find_test_interop_dir():

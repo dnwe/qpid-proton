@@ -17,7 +17,8 @@
 # under the License.
 #
 
-import os, common, sys
+import os, sys
+from . import common
 from proton import *
 try:
   from uuid import uuid4
@@ -126,9 +127,9 @@ class DataTest(Test):
     """More informative exception from putters, include bad value"""
     try:
       putter(v)
-    except Exception, e:
+    except Exception as e:
       etype, value, trace = sys.exc_info()
-      raise etype, "%s(%r): %s" % (putter.__name__, v, value), trace
+      raise etype("%s(%r): %s" % (putter.__name__, v, value)).with_traceback(trace)
     return putter
 
   # (bits, signed) for each integer type

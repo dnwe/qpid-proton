@@ -16,7 +16,11 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-import collections, Queue, socket, time, threading
+import collections, socket, time, threading
+try:
+    from Queue import Queue
+except ImportError:
+    from queue import Queue
 from proton import ConnectionException, Delivery, Endpoint, Handler, LinkException, Message
 from proton import ProtonException, Timeout, Url
 from proton.reactor import Container

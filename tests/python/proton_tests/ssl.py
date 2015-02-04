@@ -17,13 +17,14 @@
 # under the License.
 #
 
-import os, common
+import os
+from . import common
 import random
 import string
 import subprocess
 
 from proton import *
-from common import Skipped, pump
+from .common import Skipped, pump
 
 
 def _testpath(file):
@@ -791,7 +792,7 @@ class SslTest(common.Test):
         try:
             ssl3 = SSL(transport, self.server_domain)
             assert False, "Expected error did not occur!"
-        except SSLException, e:
+        except SSLException as e:
             pass
 
 class MessengerSSLTests(common.Test):
@@ -834,7 +835,7 @@ class MessengerSSLTests(common.Test):
             self.server.subscribe("amqps://~0.0.0.0:12345")
             if exception is not None:
                 assert False, "expected failure did not occur"
-        except MessengerException, e:
+        except MessengerException as e:
             if exception:
                 assert exception in str(e), str(e)
             else:

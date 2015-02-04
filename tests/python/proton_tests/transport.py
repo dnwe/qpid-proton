@@ -17,7 +17,8 @@
 # under the License.
 #
 
-import os, common
+import os
+from . import common
 from proton import *
 
 
@@ -119,7 +120,7 @@ class TransportTest(Test):
     assert n > 0, n
     try:
       self.transport.close_head()
-    except TransportException, e:
+    except TransportException as e:
       assert "aborted" in str(e), str(e)
     n = self.transport.pending()
     assert n < 0, n
@@ -129,7 +130,7 @@ class TransportTest(Test):
     assert n > 0, n
     try:
       self.transport.close_tail()
-    except TransportException, e:
+    except TransportException as e:
       assert "aborted" in str(e), str(e)
     n = self.transport.capacity()
     assert n < 0, n

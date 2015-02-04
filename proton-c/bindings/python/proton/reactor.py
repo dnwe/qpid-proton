@@ -16,7 +16,11 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-import logging, os, Queue, socket, time, types
+import logging, os, socket, time, types
+try:
+    from Queue import Queue
+except ImportError:
+    from queue import Queue
 from heapq import heappush, heappop, nsmallest
 from proton import Collector, Connection, ConnectionException, Delivery, Described, dispatch
 from proton import Endpoint, Event, EventBase, EventType, generate_uuid, Handler, Link, Message
